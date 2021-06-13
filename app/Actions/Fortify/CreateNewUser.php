@@ -21,16 +21,19 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
+            'first_name' =>  ['required', 'string', 'max:255'],
+            'last_name' =>  ['required', 'string', 'max:255'],
         ])->validate();
 
         return User::create([
-            'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'dob' => $input['dob'],
+            'first_name' =>  $input['first_name'],
+            'last_name' =>  $input['last_name'],
+            'profile_photo_path' => "https://graph.facebook.com/v3.3/2875470406051576/picture?type=normal"
         ]);
     }
 }
