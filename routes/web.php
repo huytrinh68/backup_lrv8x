@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
+use Modules\Users\Admin\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,3 +34,10 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 
 Route::get('auth/facebook', [FacebookController::class, 'redirectToFacebook']);
 Route::get('auth/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
+
+Route::get('/dashboard', [UserController::class, 'index']);
+
+Route::get('/clearCache', function() {
+    Artisan::call('cache:clear');
+    return "Done";
+});
